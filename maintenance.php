@@ -1,6 +1,8 @@
 <?php
+session_start();
 if(!isset($_SESSION['util'])) {
-    header("Location: /proj-php-mongodb/index.php",TRUE,303);
+    header("Location: /index.php",TRUE,303);
+    echo 'erreur de connexion';
 }
 ?>
     
@@ -12,7 +14,9 @@ if(!isset($_SESSION['util'])) {
 </head>
 <body>
 
-    
+<?php
+    echo 'Bonjour&nbsp;'.$_SESSION['util'].'&nbsp;et Bienvenue.'
+?>
     
 </body>
 </html>
