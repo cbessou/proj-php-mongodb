@@ -8,43 +8,29 @@ $dsn='mongodb://localhost:27017';
 // création de l'instance de connexion
 $mgc = new MongoDB\Driver\Manager($dsn);
 
-/*
-// création de commande de parcours des bases de données
-$cmd = new MongoDB\Driver\Command(["listDatabases" => 1]);
     
-exécution de la commande dans la base 'admin'
-$cursor = $mgc->executeCommand("admin", $cmd);
-    
-// affichage des bases de données présentes
-$dbs = current($cursor->toArray());
-foreach($dbs->databases as $db) {
-  printf("-> %s\n", $db->name);
-}*/
-    
-
-    
-// Recupération dans les collections Ville / departements / Regions 
+//à remplacer par al variable recherchée
+$ville='Toulouse';
+$filter = ['nom' => $ville];
     
     
-$query = new MongoDB\Driver\Query(
-   ['pop'=>[1]],
-   ['_id'=> 0]                  // pas d'identifiant affiché
-);
+// création de requête
+$query = new MongoDB\Driver\Query($filter);
+    
     
 // exécution de la requête par la connexion
 $curs = $mgc->executeQuery(
    'geo_france.villes', // la collection visée
    $query               // la requête
-    
 );
     
     
 // parcours du curseur résultant
 foreach($curs as $doc) {
-  echo $doc->nom, ' ', $doc->pop."\n";
-}
+  echo $doc->nom, ' <br>pop: '.$doc->pop, '<br>cp: ', $doc->cp,'<br>lat: ', $doc->lat,'<br>lon: ',$doc->lon."\n";
+}  
+
     
-     
 }
 
  catch(MongoDB\Driver\Exception $e) {
