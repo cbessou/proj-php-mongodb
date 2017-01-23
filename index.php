@@ -43,9 +43,9 @@ if(isset($_POST['util'])&&isset($_POST['mdp'])){
     <form action="" method="get">
     <fieldset>
         <legend>Villes</legend>
-        <label>Villes: <input type="text" name="nom" required>&nbsp;Champs Obligatoire.</label><br/>
-        <label>Département: <input type="text" name="dpt">&nbsp;Champs Facultatif.</label><br/>
-        <label>Région: <input type="text" name="reg">&nbsp;Champs Facultatif.</label><br/>
+        <label>Villes: <input type="text" name="nom" placeholder="Champ Obligatoire..." required></label><br/>
+        <label>Département: <input type="text" name="dpt"></label><br/>
+        <label>Région: <input type="text" name="reg"></label><br/>
         </fieldset>
         <input type="submit" value="Valider">
         <input type="reset" value="Réinitialiser">
