@@ -1,0 +1,1 @@
+http://php.net/manual/fr/mongo.tutorial.connecting.php
