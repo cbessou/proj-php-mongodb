@@ -23,32 +23,23 @@ $dsn='mongodb://localhost:27017';
 //$mgc = new MongoDB\Driver\Manager($dsn);
 
 $bulk = new MongoDB\Driver\BulkWrite;
-
-$document1 = ['title' => 'admin'];
-//$document2 = ['_id' => 'custom ID', 'title' => 'two'];
-//$document3 = ['_id' => new MongoDB\BSON\ObjectID, 'title' => 'three'];
+//création des documents
+$document1 = ['nom' => 'admin', 'mdp' => 'admin', 'profil' => 'admin'];
+$document2 = ['nom' => 'edit', 'mdp' => 'edit', 'profil' => 'edit'];
 
 $_id1 = $bulk->insert($document1);
-//$_id2 = $bulk->insert($document2);
-//$_id3 = $bulk->insert($document3);
-
-var_dump($_id1);
+$_id2 = $bulk->insert($document2);
 
 $manager = new MongoDB\Driver\Manager($dsn);
-$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
-$result = $manager->executeBulkWrite('db.users', $bulk, $writeConcern);
-
-//print_r($result->toArray());exit;
-
-// création de commande de parcours des de base de données
-//$cmd = new MongoDB\Driver\Command(["listDatabases" => 1]);
-// exécution de la commande dans la base 'admin'
-//$cursor = $mgc->executeCommand("admin", $cmd);
-// affichage des bases de données présentes
-//$dbs = current($cursor->toArray());
-//foreach($dbs->databases as $db) {
-//  printf("-> %s\n", $db->name);
-//}
+//$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+$result = $manager->executeBulkWrite('geo_france.users', $bulk);
+    
+    echo "La table users a été remplie<br>";
+    echo '<pre>';
+    print_r($document1);
+    //echo '<br>';
+    print_r($document2);
+    echo '</pre>';
 
 } catch(MongoDB\Driver\Exception $e) {
   // en cas d'erreur on montre le message reçu.
