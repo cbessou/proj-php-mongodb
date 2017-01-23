@@ -36,15 +36,14 @@ $mgc = new MongoDB\Driver\Manager($dsn);
             <input type="submit" value="Envoyer">
         </form>
 <?php 
-        $ville=$_GET['nom'];
+        $ville= $_GET['nom'];
         
         //à remplacer par al variable recherchée
 
-        $filter = ['nom' => $ville];
-    
+        $filter = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
+                    
         // création de requête
         $query = new MongoDB\Driver\Query($filter);
-    
     
 // exécution de la requête par la connexion
 $curs = $mgc->executeQuery(
@@ -58,9 +57,7 @@ foreach($curs as $doc) {
   echo $doc->nom, ' <br>pop: '.$doc->pop, '<br>cp: ', $doc->cp,'<br>lat: ', $doc->lat,'<br>lon: ',$doc->lon."\n";
 } 
         
-        
-        
-        
+
         
         ?>
 
