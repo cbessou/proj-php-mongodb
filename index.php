@@ -37,15 +37,15 @@ if(isset($_POST['util'])&&isset($_POST['mdp'])){
     <h1>Geo France.</h1><br/>
     <h2>Géolocalisation par Recherche</h2>
     <h2>en France Métropolitaine et Corse.</h2><br/>
-    <p>
-        
+    
     // création du formulaire html
-    <form action="" method="post">
+    <p>
+    <form action="" method="get">
     <fieldset>
         <legend>Villes</legend>
-        <label>Villes: <input type="text" name="villes">&nbsp;Champs Obligatoire.</label>
-        <label>Département: <input type="text" name="departement">&nbsp;Champs Facultatif.</label>
-        <label>Région: <input type="text" name="region">&nbsp;Champs Facultatif.</label>
+        <label>Villes: <input type="text" name="nom">&nbsp;Champs Obligatoire.</label><br/>
+        <label>Département: <input type="text" name="dpt">&nbsp;Champs Facultatif.</label><br/>
+        <label>Région: <input type="text" name="reg">&nbsp;Champs Facultatif.</label><br/>
         </fieldset>
         <input type="submit" value="Valider">
         <input type="reset" value="Réinitialiser">
