@@ -38,7 +38,7 @@ if(isset($_POST['util'])&&isset($_POST['mdp'])){
     <h2>Géolocalisation par Recherche</h2>
     <h2>en France Métropolitaine et Corse.</h2><br/>
     
-    // création du formulaire html
+    <!--création du formulaire html-->
     <p>
     <form action="" method="get">
     <fieldset>
