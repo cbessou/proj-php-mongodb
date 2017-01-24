@@ -30,34 +30,118 @@ $mgc = new MongoDB\Driver\Manager($dsn);
 
     <body>
         <form action="" method="get">
-            <fieldset>Nom
-                <input type="text" name="nom" />
-            </fieldset>
-            <input type="submit" value="Envoyer">
+        <fieldset>
+        <legend>Villes</legend>
+        <label>Villes:
+            <!--<input type="text" name="nom" placeholder="Champ Obligatoire..." required>-->
+            <input type="text" name="nom" placeholder="Champ Obligatoire...">
+        </label>
+        <br/>
+        <label>Département:
+            <input type="text" name="dpt">
+        </label>
+        <br/>
+        <label>Région:
+            <input type="text" name="reg">
+        </label>
+        <br/>
+        </fieldset>
+        <input type="submit" value="Valider">
+        <input type="reset" value="Réinitialiser">
         </form>
-<?php 
-        $ville= $_GET['nom'];
         
-        //à remplacer par al variable recherchée
-
-        $filter = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
+        <?php 
+       
+        //Récupération des variables du formulaire. 
+        
+        //MARCHE PAS -> sensé résoudreproblème lors du premier chargement de la page.
+        /*if(isset($_GET['nom'])) { 
+        $ville= $_GET['nom'];
+        } else { 
+        $ville= 'ville non renseignée';
+        }*/
+        
+        $ville= $_GET['nom'];
+        $departements= $_GET['dpt'];
+        $regions= $_GET['reg'];
+       
+        
+      /*
+        //if (isset($region)) {
+        $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$regions.'$','i')];
+        // création de requête
+        $queryR = new MongoDB\Driver\Query($filterR);
+           
+        
+        // exécution de la requête par la connexion
+        $cursR = $mgc->executeQuery(
+        'geo_france.regions',
+        $queryR               
+        );
+        //}*/
+        
+       
+              
+        $options = [
+            'projection' => ['_id' => 0],
+        ];
+              
+         $queryR = new MongoDB\Driver\Query($options);
+              
+       $cursR = $mgc->executeQuery(
+        'geo_france.regions',
+        $queryR               
+        );
+             
+            
+        
+        
+   
+    
+        
+        //Problème d'écriture -> haute-garonne non trouvée
+        $filterD = ['nom'=> new MongoDB\BSON\Regex('^'.$departements.'$','i')];
+        // création de requête
+        $queryD = new MongoDB\Driver\Query($filterD);
+           
+        
+        // exécution de la requête par la connexion
+        $cursD = $mgc->executeQuery(
+        'geo_france.departements',
+        $queryD               
+        );
+        
+        
+        
+        
+        $filterV = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
                     
         // création de requête
-        $query = new MongoDB\Driver\Query($filter);
+        $queryV = new MongoDB\Driver\Query($filterV);
     
-// exécution de la requête par la connexion
-$curs = $mgc->executeQuery(
-   'geo_france.villes', // la collection visée
-   $query               // la requête
-);
-    
-    
-// parcours du curseur résultant
-foreach($curs as $doc) {
-  echo $doc->nom, ' <br>pop: '.$doc->pop, '<br>cp: ', $doc->cp,'<br>lat: ', $doc->lat,'<br>lon: ',$doc->lon."\n";
-} 
+        // exécution de la requête par la connexion
+        $cursV = $mgc->executeQuery(
+        'geo_france.villes',
+        $queryV               
+        );
+      
         
-
+        
+        // Affichage
+        foreach($cursV as $docV) {
+      echo $docV->nom, ' <br>pop: '.$docV->pop, '<br>cp: ', $docV->cp,'<br>lat: ', $docV->lat,'<br>lon: ',$docV->lon."\n";
+        } 
+    
+        //Afficher régions
+        foreach($cursR as $docR) {
+        echo '<br>Région: '.$docR->nom;
+         } 
+        
+        // pour afficher departements
+         foreach($cursD as $docD) {
+        echo '<br>Departement: '.$docD->nom;
+         } 
+        
         
         ?>
 
