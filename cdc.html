@@ -6,8 +6,53 @@
 </head>
 <body>
     <h1>Projet PHP + MongoDB</h1>
-    <h2>Objectif : réaliser une application de maintenance de base de données.</h2>
-    <p><a href="http://ldnr.vous-et-nous.eu/mongodb/exercices/parse_source_files.php?dir=00_projet_php_mongo">Enoncé</a></p>   
-    
+    <h2>Equipe 4</h2>
+    <ul>
+        <li>Claire BESSOU - Chef de projet</li>
+        <li>Ainsley REMY</li>
+        <li>David FOURNIER</li>
+        <li>Michael MEUNIER</li>
+    </ul>
+    <h2>Objectif : réaliser une application de maintenance d'une base de données de villes.</h2>
+    <h3>Affichage des villes</h3>
+    <p>Le site permettra à tous les utilisateurs de rechercher et afficher les informations d'une ville.
+        Pour cela, un formulaire sur la page d'accueil lui permettra d'indiquer le nom d'une ville ainsi
+        que le département et/ou la région où elle se situe. La description de la ville, ou la liste des
+        villes, sera affichée en dessous du formulaire après l'envoi.<br>
+        Si il n'y a qu'une seule ville correspondant au critères de recherche, toutes ses informations
+        présentes dans la base de données parmi celles-ci seront affichées :
+    </p>
+    <ul>
+        <li>Son nom</li>
+        <li>Sa population</li>
+        <li>Son code postal</li>
+        <li>Ses coordonnées (latitude, longitude)</li>
+        <li>Le nom de son département</li>
+        <li>Le nom de sa région</li>
+        <li>Une carte indiquant sa position dans le département</li>
+    </ul>
+    <p>Si plusieurs villes correspondent aux critères demandés, la liste des villes sera affichée sous
+        forme de liens, avec leur nom et leur département.</p>
+    <h3>Mise à jour de la base de données</h3>
+    <p>Le site doit également permettre aux utilisateurs inscrits de modifier certaines informations
+    dans la base de données. Les informations pouvant être mises à jour dépendent du type de profil de
+    l'utilisateur :</p>
+    <ul>
+        <li>Profil Editeur :
+            <ul>
+                <li>Code postal de la ville</li>
+                <li>POpulation de la ville</li>
+            </ul></li>
+        <li>Profil Administrateur :
+        <ul>
+            <li>Nom de la région</li>
+            <li>Appartenance des départements aux régions</li>
+        </ul></li>
+    </ul>
+    <p>Un formulaire sur la page d'accueil doit permettre aux utilisateurs de s'authentifier avec un
+        nom d'utilisateur et un mot de passe. Si l'utilisateur est connecté, un lien pour modifier les
+        informations de la ville sélectionnée sera ajouté lors de l'affichage de celle-ci.</p>
+    <p>La page de maintenance affichera un formulaire contenant les données mofifiables de la ville.</p>
+    <h2>Structure du site</h2>
 </body>
 </html>
