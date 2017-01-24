@@ -127,6 +127,11 @@ $mgc = new MongoDB\Driver\Manager($dsn);
       
         
         
+        
+        
+        
+        
+        
         // Affichage
         foreach($cursV as $docV) {
       echo $docV->nom, ' <br>pop: '.$docV->pop, '<br>cp: ', $docV->cp,'<br>lat: ', $docV->lat,'<br>lon: ',$docV->lon."\n";
