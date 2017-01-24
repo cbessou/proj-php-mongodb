@@ -55,17 +55,17 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         //Récupération des variables du formulaire. 
         
         //MARCHE PAS -> sensé résoudreproblème lors du premier chargement de la page.
-        /*if(isset($_GET['nom'])) { 
+        if(isset($_GET['nom'])) { 
         $ville= $_GET['nom'];
         } else { 
         $ville= 'ville non renseignée';
-        }*/
+            echo $ville;
+        }
         
         $ville= $_GET['nom'];
         $departements= $_GET['dpt'];
         $regions= $_GET['reg'];
        
-        
       /*
         //if (isset($region)) {
         $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$regions.'$','i')];
@@ -80,7 +80,6 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         );
         //}*/
         
-       
               
         $options = [
             'projection' => ['_id' => 0],
@@ -93,11 +92,6 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         $queryR               
         );
              
-            
-        
-        
-   
-    
         
         //Problème d'écriture -> haute-garonne non trouvée
         $filterD = ['nom'=> new MongoDB\BSON\Regex('^'.$departements.'$','i')];
@@ -113,7 +107,6 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         
         
         
-        
         $filterV = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
                     
         // création de requête
@@ -125,9 +118,6 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         $queryV               
         );
       
-        
-        
-        
         
         
         
