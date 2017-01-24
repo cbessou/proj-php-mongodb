@@ -6,17 +6,24 @@ if(isset($_POST['deco'])){
 }
 if(isset($_POST['util'])&&isset($_POST['mdp'])){
     //interroger la base de données
-    if($_POST['util']=='admin' && $_POST['mdp']=='admin') {
-        //si corespondance la session recoit l'identifiant et le type
-        $_SESSION['util']=$_POST['util'];
-    }
-    elseif($_POST['util']=='edit' && $_POST['mdp']=='edit') {
-        $_SESSION['util']=$_POST['edit'];
-    }
-    //sinon erreur identifiant ou mdp
-    else {
-        echo 'identifiant ou mot de passe erronée'
-    }
+    $dsn='mongodb://localhost:27017';
+    $dbname = 'geo_france';
+    $collname = 'users';
+
+try {
+  $mgc = new MongoDB\Driver\Manager($dsn);
+ 
+  $filter = ['nom' => $_POST['util'],'mdp' => $_POST['mdp']];
+  $query = new MongoDB\Driver\Query($filter);
+  $find = $mgc->executeQuery($dbname.'.'.$collname, $query);
+  if(count($find->toArray()==1)) {
+    $_SESSION['util']='';
+    $_SESSION['profil']='';
+  }
+} catch(MongoDB\Driver\Exception $e) {
+  // en cas d'erreur on montre le message reçu.
+   printf("<h2>erreur de connexion</h2>\n<pre>%s</pre>\n", $e->getMessage());
+}
 }
 ?>
 <!DOCTYPE html>
