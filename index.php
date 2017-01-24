@@ -6,10 +6,17 @@ if(isset($_POST['deco'])){
 }
 if(isset($_POST['util'])&&isset($_POST['mdp'])){
     //interroger la base de données
-    //si corespondance la session recoit l'identifiant et le type
-    $_SESSION['util']=$_POST['util'];
-    
+    if($_POST['util']=='admin' && $_POST['mdp']=='admin') {
+        //si corespondance la session recoit l'identifiant et le type
+        $_SESSION['util']=$_POST['util'];
+    }
+    elseif($_POST['util']=='edit' && $_POST['mdp']=='edit') {
+        $_SESSION['util']=$_POST['edit'];
+    }
     //sinon erreur identifiant ou mdp
+    else {
+        echo 'identifiant ou mot de passe erronée'
+    }
 }
 ?>
 <!DOCTYPE html>
