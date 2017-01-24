@@ -26,8 +26,8 @@ if(isset($_POST['util'])&&isset($_POST['mdp'])){
                 echo '<input type="submit" name="deco" value="Déconnexion">';
                 echo '<a href="maintenance.php">Page de maintenance</a>';
             }else{
-                echo '<input type="text" name="util" placeholder="Utilisateur">
-            <input type="password" name="mdp" placeholder="Mot de passe">
+                echo '<input type="text" name="util" placeholder="Utilisateur" required>
+            <input type="password" name="mdp" placeholder="Mot de passe" required>
             <input type="submit" value="Connexion">';
             }
             ?>
