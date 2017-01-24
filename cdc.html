@@ -41,7 +41,7 @@
         <li>Profil Editeur :
             <ul>
                 <li>Code postal de la ville</li>
-                <li>POpulation de la ville</li>
+                <li>Population de la ville</li>
             </ul></li>
         <li>Profil Administrateur :
         <ul>
@@ -54,5 +54,36 @@
         informations de la ville sélectionnée sera ajouté lors de l'affichage de celle-ci.</p>
     <p>La page de maintenance affichera un formulaire contenant les données mofifiables de la ville.</p>
     <h2>Structure du site</h2>
+    <p>Page d'accueil :</p>
+    <img src="accueil_nc_nr.png" alt="interface non connecté">
+    <img src="accueil_c_nr.png" alt="interface connecté">
+    <h2>Fonctionnalités</h2>
+    
+    <h2>Technique</h2>
+    <h3>Stockage des données</h3>
+    <p>Base de données MongoDB existante : geo_france</p>
+    <ul>
+        <li>Collections existantes :<ul>
+            <li>villes (propriétés modifiables : pop, cp - immuables : nom, lat, lon, _id_dept)</li>
+            <li>departements (propriété modifiable : _id_region - immuables : code, contours, nom)</li>
+            <li>regions (propriété modifiable : nom)</li>
+        </ul></li>
+        <li>Collection à ajouter :<ul>
+            <li>users (nom, mdp, profil)</li>
+        </ul></li>
+    </ul>
+    <h3>Fonctionnalités détaillées</h3>
+    <h4>Connexion</h4>
+    <p>Formulaire de connexion utilisant la méthode post.<br>
+    Champs :</p>
+    <ul>
+        <li>Nom d'utilisateur - input type : text, nom : util</li>
+        <li>Mot de passes - input type : password, nom : mdp</li>
+        <li>Connexion - input type : submit, nom : connect</li>
+    </ul>
+    <p>Après un clic sur connexion, une requêtre sera envoyée à la base de données pour récupérer
+    le document de la collection users correspondant exactement à ce nom et ce mot de passe.<br>
+    Le nom d'utilisateur et son type de profil seront stockés dans la session en cours.<br>
+    Si aucune correspondance n'est trouvée, un message d'erreur sera affiché.</p>
 </body>
 </html>
