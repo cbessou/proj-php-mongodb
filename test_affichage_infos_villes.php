@@ -1,14 +1,10 @@
 <?php 
 try { 
-
 // les paramètres de connexion
 $dsn='mongodb://localhost:27017';
-    
 // création de l'instance de connexion
 $mgc = new MongoDB\Driver\Manager($dsn);
-
 }
-
  catch(MongoDB\Driver\Exception $e) {
   // en cas d'erreur on montre le message reçu.
   die (sprintf("<h2>traitement de l'erreur survenue durant le traitement</h2>\n<pre>%s</pre>\n", $e->getMessage()));
@@ -33,8 +29,8 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         <fieldset>
         <legend>Villes</legend>
         <label>Villes:
-            <input type="text" name="nom" placeholder="Champ Obligatoire..." required>
-    
+           <!-- <input type="text" name="nom" placeholder="Champ Obligatoire..." required>-->
+        <input type="text" name="nom" placeholder="Champ Obligatoire...">
         </label>
         <br/>
         <label>Département:
@@ -53,9 +49,9 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         <?php 
        
         //Récupération des variables du formulaire. Declaration et vérification isset pour résoudre problème de variables non définis lors du premier chargement de la page
-        $ville='non renseignée';
+       /* $ville='non renseignée';
         $departements= 'non renseignée';
-        $regions= 'non renseignée';
+        $regions= 'non renseignée';*/
         
         if (isset($_GET['nom'])) { 
         $ville= $_GET['nom'];
@@ -68,46 +64,11 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         if (isset($_GET['reg'])) { 
          $regions= $_GET['reg'];
         }
-       
-       
-      
-        //if (isset($region)) {
-        $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$regions.'$','i')];
-        // création de requête
-        $queryR = new MongoDB\Driver\Query($filterR);
-           
         
-        // exécution de la requête par la connexion
-        $cursR = $mgc->executeQuery(
-        'geo_france.regions',
-        $queryR               
-        );
-        
-        /*
-        $options = [
-            'projection' => ['_id' => 0],
-        ];
-        $queryR = new MongoDB\Driver\Query($options);
-        $cursR = $mgc->executeQuery(
-        'geo_france.regions',
-        $queryR               
-        );*/
-             
-
-        //Problème d'écriture -> haute-garonne non trouvée
-        $filterD = ['nom'=> new MongoDB\BSON\Regex('^'.$departements.'$','i')];
-        // création de requête
-        $queryD = new MongoDB\Driver\Query($filterD);
-           
-        
-        // exécution de la requête par la connexion
-        $cursD = $mgc->executeQuery(
-        'geo_france.departements',
-        $queryD               
-        );
-        
-
-        
+        //Initialisation d'un tableau pour les résultats
+        $resultat = [];
+    
+        ////////// VILLE //////////////
         $filterV = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
                     
         // création de requête
@@ -116,25 +77,94 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         // exécution de la requête par la connexion
         $cursV = $mgc->executeQuery(
         'geo_france.villes',
-        $queryV               
-        );
-      
+        $queryV 
+            );
+            
+        $resV = $cursV -> toArray(); 
+        $compteV = count($resV);
+        $filter =[];
         
-        
-        // Affichage
-        foreach($cursV as $docV) {
-      echo $docV->nom, ' <br>pop: '.$docV->pop, '<br>cp: ', $docV->cp,'<br>lat: ', $docV->lat,'<br>lon: ',$docV->lon."\n";
+        if ($compteV !==0) { 
+            for ($i=0; $i < $compteV; $i++) {
+                    echo ('<pre>');
+                    print_r ($resV[$i]);
+                    echo ('</pre>');
+                
+                    $id= $resV[$i] -> _id_dept;
+                
+                    if (isset($_GET['dpt'])) {
+                        
+                        $filterD = ['nom'=> new MongoDB\BSON\Regex('^'.$departements.'.*','i'), '_id'=>$id];
+                    } else { 
+                       
+                         $filterD = ['_id'=>$id];
+                    }
+                    
+                    $queryD = new MongoDB\Driver\Query($filterD);
+                    $cursD = $mgc->executeQuery(
+                    'geo_france.departements',
+                    $queryD               
+                    );
+                   
+                    $resD = $cursD -> toArray(); 
+                
+                    echo ('<pre>');
+                    print_r($filterD);
+                    print_r ($resD);
+                    echo ('</pre>');
+            }
         } 
-    
-        //Afficher régions
+        
+       
+       /*if (isset($region)) {
+           $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$regions.'$','i')];
+           $queryR = new MongoDB\Driver\Query($filterR);
+           
+           $cursR_one = $mgc->executeQuery(
+           'geo_france.regions',
+           $queryR    
+           );
+       }
+           
+        else {
+        $filterR = [];
+        $queryR = new MongoDB\Driver\Query($filterR);
+        $cursR_all = $mgc->executeQuery(
+        'geo_france.regions',
+        $queryR   
+        );
+        }
+             */
+        
+        
+        
+        ////////////////////// REGIONS //////////////////
+        //Problème de caractères -> ex: haute-garonne non trouvée
+        
+        // création de requête
+          
+        
+        // exécution de la requête par la connexion
+       /* */
+        
+                  
+        /////////////////// Affichage ////////////////////
+       /* foreach($cursV as $docV) {
+        echo $docV->nom, ' <br>pop: '.$docV->pop, '<br>cp: ', $docV->cp,'<br>lat: ', $docV->lat,'<br>lon: ',$docV->lon."\n";
+        } 
+    */
+        /*Afficher régions
         foreach($cursR as $docR) {
         echo '<br>Région: '.$docR->nom;
-         } 
+         } */
         
+    
         // pour afficher departements
-         foreach($cursD as $docD) {
+      /*   foreach($cursD as $docD) {
         echo '<br>Departement: '.$docD->nom;
          } 
+        */
+
         
         ?>
 
