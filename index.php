@@ -16,9 +16,12 @@ try {
   $filter = ['nom' => $_POST['util'],'mdp' => $_POST['mdp']];
   $query = new MongoDB\Driver\Query($filter);
   $find = $mgc->executeQuery($dbname.'.'.$collname, $query);
-  if(count($find->toArray()==1)) {
-    $_SESSION['util']='';
-    $_SESSION['profil']='';
+  $result = $find->toArray();
+  //print_r($result);
+  //print_r(count($result));
+  if(count($result)==1) {
+    $_SESSION['util']=$result[0]->nom;
+    $_SESSION['profil']=$result[0]->profil;
   }
 } catch(MongoDB\Driver\Exception $e) {
   // en cas d'erreur on montre le message reçu.
