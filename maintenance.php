@@ -11,13 +11,16 @@ if(!isset($_SESSION['util'])) {
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet PHP - MongoDB</title>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-
-<h1>Maintenance de la base de données</h1>
-    <h1>Geo France</h1><br/>
-    <h2>Vous êtes éditeur :</h2>
+    <div id="page_index">
+    <header>
+        <h1>Maintenance de la base de données<br/>Geo France</h1>
+    </header>
+        <h2>Vous êtes éditeur :</h2>
 
 <?php
 // requêtes d'écriture dans la base de données
@@ -118,6 +121,7 @@ if(isset($_GET['idv'])) {
         // en cas d'erreur affichage du message reçu
         die (sprintf("<h2>traitement de l'erreur survenue durant le traitement</h2>\n<pre>%s</pre>\n", $e->getMessage()));
     }
-?> 
+?>
+</div>
 </body>
 </html>
