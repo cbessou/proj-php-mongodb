@@ -42,79 +42,87 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         </label>
         <br/>
         </fieldset>
-        <input type="submit" value="Valider">
+        <input type="submit" value="Valider" name="rech">
         <input type="reset" value="Réinitialiser">
         </form>
         
         <?php 
        
         //Récupération des variables du formulaire. Declaration et vérification isset pour résoudre problème de variables non définis lors du premier chargement de la page
-       /* $ville='non renseignée';
-        $departements= 'non renseignée';
-        $regions= 'non renseignée';*/
-        
-        if (isset($_GET['nom'])) { 
-        $ville= $_GET['nom'];
-        } 
+        if(isset($_GET['rech'])){
+            //récupérer les valeurs
+            if(isset($_GET['nom'])){ 
+                $ville= $_GET['nom'];
+            }
+            if(isset($_GET['dpt'])){ 
+                $dept= $_GET['dpt'];
+            }
+            if(isset($_GET['reg'])){ 
+                $region= $_GET['reg'];
+            }
        
-        if (isset($_GET['dpt'])) { 
-        $departements= $_GET['dpt'];
-        }
-        
-        if (isset($_GET['reg'])) { 
-         $regions= $_GET['reg'];
-        }
-        
-        //Initialisation d'un tableau pour les résultats
-        $resultat = [];
+            //Initialisation d'un tableau pour les résultats
+            $resultat = [];
     
-        ////////// VILLE //////////////
-        $filterV = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
-                    
-        // création de requête
-        $queryV = new MongoDB\Driver\Query($filterV);
+            ////////// VILLE //////////////
+            $filterV = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'.*','i')];
+            $options = ['projection' => ['nom' => 1, '_id_dept' => 1]];
+            // création de requête
+            $queryV = new MongoDB\Driver\Query($filterV, $options);
     
-        // exécution de la requête par la connexion
-        $cursV = $mgc->executeQuery(
-        'geo_france.villes',
-        $queryV 
-            );
-            
-        $resV = $cursV -> toArray(); 
-        $compteV = count($resV);
-        $filter =[];
+            // exécution de la requête par la connexion
+            $cursV = $mgc->executeQuery('geo_france.villes', $queryV);
+            $resV = $cursV -> toArray(); 
+            $compteV = count($resV);
         
-        if ($compteV !==0) { 
-            for ($i=0; $i < $compteV; $i++) {
-                    echo ('<pre>');
-                    print_r ($resV[$i]);
-                    echo ('</pre>');
+            if ($compteV !==0) {
                 
-                    $id= $resV[$i] -> _id_dept;
+                for ($i=0; $i < $compteV; $i++) {
+                    $id = $resV[$i] -> _id_dept;
+                    $filterD = ['nom'=> new MongoDB\BSON\Regex('^'.$dept.'.*','i'), '_id'=>$id];
+                    $options = ['projection' => ['nom' => 1, '_id_region' => 1]];
+                    $queryD = new MongoDB\Driver\Query($filterD, $options);
+                    $cursD = $mgc->executeQuery('geo_france.departements', $queryD);
                 
-                    if (isset($_GET['dpt'])) {
-                        
-                        $filterD = ['nom'=> new MongoDB\BSON\Regex('^'.$departements.'.*','i'), '_id'=>$id];
-                    } else { 
-                       
-                         $filterD = ['_id'=>$id];
-                    }
-                    
-                    $queryD = new MongoDB\Driver\Query($filterD);
-                    $cursD = $mgc->executeQuery(
-                    'geo_france.departements',
-                    $queryD               
-                    );
-                   
                     $resD = $cursD -> toArray();
-                
+                    //print_r ($resD);
+                    $compteD = count($resD);
+                    $id = $resD[0] -> _id_region;
+                    $options = ['projection' => ['nom' => 1]];
+                    if($compteD==1){
+                        $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$region.'.*','i'), '_id'=>$id];
+                        $queryR = new MongoDB\Driver\Query($filterR, $options);
+                        $cursR = $mgc->executeQuery('geo_france.regions', $queryR);
+                        $resR = $cursR -> toArray();
+                        if(count($resR)==1){
+                            $tmp=[];
+                            foreach($resV[$i] as $key => $value){
+                                $tmp[$key]= $value;
+                            }
+                            //print_r ($tmp);
+                            foreach($resD[0] as $key => $value){
+                                if($key=='nom'){
+                                    $tmp['nom-dpt']=$value;
+                                }else{
+                                    $tmp[$key]=$value;
+                                }
+                            }
+                            foreach($resR[0] as $key => $value){
+                                if($key=='nom'){
+                                    $tmp['nom-reg']=$value;
+                                }else{
+                                    $tmp[$key]=$value;
+                                }
+                            }
+                            $resultat[]=$tmp;
+                        }
+                    }
+                }
                 echo ('<pre>');
-                    print_r($filterD);
-                    print_r ($resD);
+                print_r ($resultat);
                 echo ('</pre>');
             } 
         }    
-       
        
        /*if (isset($region)) {
            $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$regions.'$','i')];
