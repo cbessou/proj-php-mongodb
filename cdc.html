@@ -52,11 +52,27 @@
     <p>Un formulaire sur la page d'accueil doit permettre aux utilisateurs de s'authentifier avec un
         nom d'utilisateur et un mot de passe. Si l'utilisateur est connecté, un lien pour modifier les
         informations de la ville sélectionnée sera ajouté lors de l'affichage de celle-ci.</p>
-    <p>La page de maintenance affichera un formulaire contenant les données mofifiables de la ville.</p>
+    <p>La page de maintenance affichera un formulaire contenant les données mofifiables de la ville.
+        Elle ne doit pas être acessible pour les utilisateurs non connectés (une redirection sera 
+        effectuée)</p>
     <h2>Structure du site</h2>
     <p>Page d'accueil :</p>
-    <img src="accueil_nc_nr.png" alt="interface non connecté">
-    <img src="accueil_c_nr.png" alt="interface connecté">
+    <figure>
+        <img src="accueil_nc_nr.png" alt="interface non connecté"><br>
+		<figcaption>interface accueil non connecté</figcaption>
+    </figure>
+    <figure>
+        <img src="accueil_c_nr.png" alt="interface connecté"><br>
+		<figcaption>interface accueil connecté</figcaption>
+    </figure>
+    <figure>
+        <img src="choix_ville.png" alt="affichage liste villes"><br>
+		<figcaption>Affichage d'une liste de villes</figcaption>
+    </figure>
+    <figure>
+        <img src="resultat_ville.png" alt="affichage une ville"><br>
+		<figcaption>Affichage d'une ville</figcaption>
+    </figure>
     <h2>Fonctionnalités</h2>
     
     <h2>Technique</h2>
@@ -78,12 +94,36 @@
     Champs :</p>
     <ul>
         <li>Nom d'utilisateur - input type : text, nom : util</li>
-        <li>Mot de passes - input type : password, nom : mdp</li>
+        <li>Mot de passe - input type : password, nom : mdp</li>
         <li>Connexion - input type : submit, nom : connect</li>
     </ul>
-    <p>Après un clic sur connexion, une requêtre sera envoyée à la base de données pour récupérer
+    <p>Après un clic sur connexion, une requête sera envoyée à la base de données pour récupérer
     le document de la collection users correspondant exactement à ce nom et ce mot de passe.<br>
     Le nom d'utilisateur et son type de profil seront stockés dans la session en cours.<br>
     Si aucune correspondance n'est trouvée, un message d'erreur sera affiché.</p>
+    <h4>Recherche de villes</h4>
+    <h5>Recherche</h5>
+    <p>Formulaire de recherche utilisant la méthode get.
+    Champs :</p>
+    <ul>
+        <li>Nom - input type : text, nom : nom</li>
+        <li>Département - input type : text, nom : dpt</li>
+        <li>Région - input type : text, nom : reg</li>
+        <li>Rechercher - input type : submit, nom : rech</li>
+    </ul>
+    <p>Après un clic sur rechercher, une requête est envoyée à la base de données pour récupérer 
+        les villes correspondant au nom entré. Ensuite, pour chaque ville trouvée, on fait une
+        nouvelle requête pour récupérer son département si il correspond au département entré. Si 
+        c'est le cas, on fait une dernière requête pour vérifier si la région de la ville correspond
+        aussi à la valeur entrée.<br>
+        Les résultats sont ensuite stockés dans un tableau.
+    </p>
+    <h5>Affichage</h5>
+    <p>Si le tableau de résultats est vide, la page indique qu'il n'y a aucune correspondance.<br>
+        Si il y a plusieurs résultats, la page affiche une liste des villes avec leur nom et leur
+        département.<br>
+        Si il n'y a qu'un seul résultat, il faut récupérer les informations manquantes avec une 
+        requête sur la collection villes en utilisant son _id, puis afficher l'ensemble des informations.
+    </p>
 </body>
 </html>

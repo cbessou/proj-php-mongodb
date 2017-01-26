@@ -22,7 +22,7 @@ if(!isset($_SESSION['util'])) {
 //on verifie qu'on a bien recu la ville a modifier
 if(isset($_GET['idv'])) {
     echo'<pre>';
-    $idv = $_GET['idv'];
+    $idv = (int)$_GET['idv'];
     print_r($idv);
     //on récupère les infos de la ville
     try { 
@@ -31,22 +31,19 @@ if(isset($_GET['idv'])) {
     // création de l'instance de connexion
         $mgc = new MongoDB\Driver\Manager($dsn);
 
-    // filtre sur l'id de la ville
     // préparation de la requête 
-$filter = ['_id'=>$idv];
-print_r($filter);
-$options = ['projection' => ['nom' => 1, '_id_dept' => 1, 'pop' => 1, 'cp' => 1]];
-$query = new MongoDB\Driver\Query($filter, $options);
-print_r($query);
+        $filter = ['_id' => $idv];
+        print_r($filter);
+        $options = ['projection' => ['nom' => 1, '_id_dept' => 1, 'pop' => 1, 'cp' => 1]];
+        $query = new MongoDB\Driver\Query($filter, $options);
+        print_r($query);
     // lancement de la requête
-$curs = $mgc->executeQuery('geo_france.villes', $query);
+        $curs = $mgc->executeQuery('geo_france.villes', $query);
 
-print_r($curs);  
-$res = $curs -> toArray(); 
-print_r($res);
-echo'</pre>';
-$resultat = ['_id'=>19, 'nom'=>'Toto', 'pop'=>1000, 'cp'=>25836, '_id_dept'=>25, '_id_region'=>4, 'nom_region'=>'Titi'];
-print_r($resultat);
+        print_r($curs);  
+        $res = $curs -> toArray(); 
+        print_r($res);
+        echo'</pre>';
     }
     catch(MongoDB\Driver\Exception $e) {
         // en cas d'erreur on montre le message reçu.
