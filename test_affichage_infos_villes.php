@@ -106,15 +106,15 @@ $mgc = new MongoDB\Driver\Manager($dsn);
                     $queryD               
                     );
                    
-                    $resD = $cursD -> toArray(); 
+                    $resD = $cursD -> toArray();
                 
-                    echo ('<pre>');
+                echo ('<pre>');
                     print_r($filterD);
                     print_r ($resD);
-                    echo ('</pre>');
-            }
-        } 
-        
+                echo ('</pre>');
+            } 
+        }    
+       
        
        /*if (isset($region)) {
            $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$regions.'$','i')];
