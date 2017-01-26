@@ -2,162 +2,182 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet PHP - MongoDB</title>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-    <h1>Projet PHP + MongoDB</h1>
-    <h2>Equipe 4</h2>
-    <ul>
-        <li>Claire BESSOU - Chef de projet</li>
-        <li>Ainsley REMY</li>
-        <li>David FOURNIER</li>
-        <li>Michael MEUNIER</li>
-    </ul>
-    <h2>Objectif : réaliser une application de maintenance d'une base de données de villes.</h2>
-    <h3>Affichage des villes</h3>
-    <p>Le site permettra à tous les utilisateurs de rechercher et afficher les informations d'une ville.
-        Pour cela, un formulaire sur la page d'accueil lui permettra d'indiquer le nom d'une ville ainsi
-        que le département et/ou la région où elle se situe. La description de la ville, ou la liste des
-        villes, sera affichée en dessous du formulaire après l'envoi.<br>
-        S'il n'y a qu'une seule ville correspondant aux critères de recherche, certaines des informations contenues dans la base donnée seront affichées. A savoir:
-    </p>
-    <ul>
-        <li>Son nom</li>
-        <li>Sa population</li>
-        <li>Son code postal</li>
-        <li>Ses coordonnées (latitude, longitude)</li>
-        <li>Le nom de son département</li>
-        <li>Le nom de sa région</li>
-        <li>Une carte indiquant sa position dans le département</li>
-    </ul>
-    <p>Si plusieurs villes correspondent aux critères demandés, la liste des villes sera affichée sous
-        forme de liens, avec leur nom et leur département.</p>
-    <h3>Mise à jour de la base de données</h3>
-    <p>Le site doit également permettre aux utilisateurs inscrits de modifier certaines informations
-    dans la base de données. Les informations pouvant être mises à jour dépendent du type de profil de
-    l'utilisateur :</p>
-    <ul>
-        <li>Profil Editeur :
-            <ul>
-                <li>Code postal de la ville</li>
-                <li>Population de la ville</li>
-            </ul></li>
-        <li>Profil Administrateur :
+    <div id='page_index'>
+        <header>
+            <h1>Projet PHP + MongoDB : Cahier des charges</h1>
+        </header>
+        <h2>Equipe 4</h2>
         <ul>
-            <li>Nom de la région</li>
-            <li>Appartenance des départements aux régions</li>
-        </ul></li>
-    </ul>
-    <p>Un formulaire sur la page d'accueil doit permettre aux utilisateurs de s'authentifier avec un
-        nom d'utilisateur et un mot de passe. Si l'utilisateur est connecté, un lien pour modifier les
-        informations de la ville sélectionnée sera ajouté lors de l'affichage de celle-ci.</p>
+            <li>Claire BESSOU - Chef de projet</li>
+            <li>Ainsley REMY</li>
+            <li>David FOURNIER</li>
+            <li>Michael MEUNIER</li>
+        </ul>
+        <h2>Objectif : réaliser une application de maintenance d'une base de données de villes.</h2>
+        <h3>Affichage des villes</h3>
+        <p>Le site permettra à tous les utilisateurs de rechercher et afficher les informations d'une ville.
+            Pour cela, un formulaire sur la page d'accueil lui permettra d'indiquer le nom d'une ville ainsi
+            que le département et/ou la région où elle se situe. La description de la ville, ou la liste des
+            villes, sera affichée en dessous du formulaire après l'envoi.<br>
+        S'il n'y a qu'une seule ville correspondant aux critères de recherche, certaines des informations contenues dans la base donnée seront affichées. A savoir:
+        </p>
+        <ul>
+            <li>Son nom</li>
+            <li>Sa population</li>
+            <li>Son code postal</li>
+            <li>Ses coordonnées (latitude, longitude)</li>
+            <li>Le nom de son département</li>
+            <li>Le nom de sa région</li>
+            <li>Une carte indiquant sa position dans le département</li>
+        </ul>
+        <p>Si plusieurs villes correspondent aux critères demandés, la liste des villes sera affichée sous
+            forme de liens, avec leur nom et leur département.</p>
+        <h3>Mise à jour de la base de données</h3>
+        <p>Le site doit également permettre aux utilisateurs inscrits de modifier certaines informations
+        dans la base de données. Les informations pouvant être mises à jour dépendent du type de profil de
+        l'utilisateur :</p>
+        <ul>
+            <li>Profil Editeur :
+                <ul>
+                    <li>Code postal de la ville</li>
+                    <li>Population de la ville</li>
+                </ul></li>
+            <li>Profil Administrateur :
+            <ul>
+                <li>Nom de la région</li>
+                <li>Appartenance des départements aux régions</li>
+            </ul></li>
+        </ul>
+        <p>Un formulaire sur la page d'accueil doit permettre aux utilisateurs de s'authentifier avec un
+            nom d'utilisateur et un mot de passe. Si l'utilisateur est connecté, un lien pour modifier les
+            informations de la ville sélectionnée sera ajouté lors de l'affichage de celle-ci.</p>
     <p>La page de maintenance affichera un formulaire contenant les données modifiables de la ville.
         Elle ne doit pas être accessible pour les utilisateurs non connectés (une redirection sera 
-        effectuée)</p>
-    <h2>Structure du site</h2>
-    <p>Page d'accueil :</p>
-    <figure>
-        <img src="accueil_nc_nr.png" alt="interface non connecté"><br>
-		<figcaption>interface accueil non connecté</figcaption>
-    </figure>
-    <figure>
-        <img src="accueil_c_nr.png" alt="interface connecté"><br>
-		<figcaption>interface accueil connecté</figcaption>
-    </figure>
-    <figure>
-        <img src="choix_ville.png" alt="affichage liste villes"><br>
-		<figcaption>Affichage d'une liste de villes</figcaption>
-    </figure>
-    <figure>
-        <img src="resultat_ville.png" alt="affichage une ville"><br>
-		<figcaption>Affichage d'une ville</figcaption>
-    </figure>
-    <h2>Fonctionnalités</h2>
-    
-    <h2>Technique</h2>
-    <h3>Stockage des données</h3>
-    <p>Base de données MongoDB existante : geo_france</p>
-    <ul>
-        <li>Collections existantes :<ul>
-            <li>villes (propriétés modifiables : pop, cp - immuables : nom, lat, lon, _id_dept)</li>
-            <li>departements (propriété modifiable : _id_region - immuables : code, contours, nom)</li>
-            <li>regions (propriété modifiable : nom)</li>
-        </ul></li>
-        <li>Collection à ajouter :<ul>
-            <li>users (nom, mdp, profil)</li>
-        </ul></li>
-    </ul>
-    <h3>Fonctionnalités détaillées</h3>
-    <h4>Connexion</h4>
-    <p>Formulaire de connexion utilisant la méthode post.<br>
-    Champs :</p>
-    <ul>
-        <li>Nom d'utilisateur - input type : text, nom : util</li>
-        <li>Mot de passe - input type : password, nom : mdp</li>
-        <li>Connexion - input type : submit, nom : connect</li>
-    </ul>
-    <p>Utilisation de la session pour maintenir la connexion entre les pages. Les informations de
-    la connexion seront stockées dans ['util'] pour le nom d'utilisateur et ['profil'] pour son type
-    de profil</p>
-    <p>Après un clic sur connexion, une requête sera envoyée à la base de données pour récupérer
-    le document de la collection users correspondant exactement à ce nom et ce mot de passe.<br>
-    Le nom d'utilisateur et son type de profil seront stockés dans la session en cours.<br>
-    Si aucune correspondance n'est trouvée, un message d'erreur sera affiché.</p>
-    <h4>Recherche de villes</h4>
-    <h5>Recherche</h5>
-    <p>Formulaire de recherche utilisant la méthode get.
-    Champs :</p>
-    <ul>
-        <li>Nom - input type : text, nom : nom, required</li>
-        <li>Département - input type : text, nom : dpt</li>
-        <li>Région - input type : text, nom : reg</li>
-        <li>Rechercher - input type : submit, nom : rech</li>
-        <li>Réinitialiser - input type : reset</li>
-    </ul>
-    <p>Après un clic sur rechercher, une requête est envoyée à la base de données pour récupérer 
-        les villes correspondant au nom entré. Ensuite, pour chaque ville trouvée, on fait une
-        nouvelle requête pour récupérer son département si il correspond au département entré. Si 
-        c'est le cas, on fait une dernière requête pour vérifier si la région de la ville correspond
-        aussi à la valeur entrée.<br>
-        Les résultats sont ensuite stockés dans un tableau.
-    </p>
-    <h5>Affichage</h5>
-    <p>Si le tableau de résultats est vide, la page indique qu'il n'y a aucune correspondance.<br>
-        Si il y a plusieurs résultats, la page affiche une liste des villes sous forme de liens,
-        avec leur nom et leur département. Le nom, le département et la région de la vile choisie
-        sont transmis par l'url.<br>
+            effectuée)</p>
+        <h2>Structure du site</h2>
+        <p>Page d'accueil :</p>
+        <figure>
+            <img src="accueil_nc_nr.png" alt="interface non connecté"><br>
+            <figcaption>interface accueil non connecté</figcaption>
+        </figure>
+        <figure>
+            <img src="accueil_c_nr.png" alt="interface connecté"><br>
+            <figcaption>interface accueil connecté</figcaption>
+        </figure>
+        <figure>
+            <img src="choix_ville.png" alt="affichage liste villes"><br>
+            <figcaption>Affichage d'une liste de villes</figcaption>
+        </figure>
+        <figure>
+            <img src="resultat_ville.png" alt="affichage une ville"><br>
+            <figcaption>Affichage d'une ville</figcaption>
+        </figure>
+        <figure>
+            <img src="maintenance_edit_V2.1.png" alt="interface maintenance edit"><br>
+            <figcaption>Interface de maintenance éditeur</figcaption>
+        </figure>
+        <figure>
+            <img src="maintenance_admin_V2.1.png" alt="interface maintenance admin"><br>
+            <figcaption>Interface de maintenance administrateur</figcaption>
+        </figure>
+        <h2>Fonctionnalités</h2>
+
+        <h2>Technique</h2>
+        <h3>Stockage des données</h3>
+        <p>Base de données MongoDB existante : geo_france</p>
+        <ul>
+            <li>Collections existantes :<ul>
+                <li>villes (propriétés modifiables : pop, cp - immuables : nom, lat, lon, _id_dept)</li>
+                <li>departements (propriété modifiable : _id_region - immuables : code, contours, nom)</li>
+                <li>regions (propriété modifiable : nom)</li>
+            </ul></li>
+            <li>Collection à ajouter :<ul>
+                <li>users (nom, mdp, profil)</li>
+            </ul></li>
+        </ul>
+        <h3>Fonctionnalités détaillées</h3>
+        <h4>Connexion</h4>
+        <p>Formulaire de connexion utilisant la méthode post.<br>
+        Champs :</p>
+        <ul>
+            <li>Nom d'utilisateur - input type : text, nom : util</li>
+            <li>Mot de passe - input type : password, nom : mdp</li>
+            <li>Connexion - input type : submit, nom : connect</li>
+        </ul>
+        <p>Utilisation de la session pour maintenir la connexion entre les pages. Les informations de
+        la connexion seront stockées dans ['util'] pour le nom d'utilisateur et ['profil'] pour son type
+        de profil</p>
+        <p>Après un clic sur connexion, une requête sera envoyée à la base de données pour récupérer
+        le document de la collection users correspondant exactement à ce nom et ce mot de passe.<br>
+        Le nom d'utilisateur et son type de profil seront stockés dans la session en cours.<br>
+        Si aucune correspondance n'est trouvée, un message d'erreur sera affiché.</p>
+        <h4>Recherche de villes</h4>
+        <h5>Recherche</h5>
+        <p>Formulaire de recherche utilisant la méthode get.
+        Champs :</p>
+        <ul>
+            <li>Nom - input type : text, nom : nom, required</li>
+            <li>Département - input type : text, nom : dpt</li>
+            <li>Région - input type : text, nom : reg</li>
+            <li>Rechercher - input type : submit, nom : rech</li>
+            <li>Réinitialiser - input type : reset</li>
+        </ul>
+        <p>Après un clic sur rechercher, une requête est envoyée à la base de données pour récupérer 
+            les villes correspondant au nom entré. Ensuite, pour chaque ville trouvée, on fait une
+            nouvelle requête pour récupérer son département si il correspond au département entré. Si 
+            c'est le cas, on fait une dernière requête pour vérifier si la région de la ville correspond
+            aussi à la valeur entrée.<br>
+            Les résultats sont ensuite stockés dans un tableau.
+        </p>
+        <h5>Affichage</h5>
+        <p>Si le tableau de résultats est vide, la page indique qu'il n'y a aucune correspondance.<br>
+            Si il y a plusieurs résultats, la page affiche une liste des villes sous forme de liens,
+            avec leur nom et leur département. Le nom, le département et la région de la vile choisie
+            sont transmis par l'url.<br>
         S'il n'y a qu'un seul résultat, il faut récupérer les informations manquantes avec une 
-        requête sur la collection villes en utilisant son _id, puis afficher l'ensemble des informations.
-        De plus, si l'utilisateur est connecté, un lien vers la page de maintenance lui permet 
-        de mofier les données. L'_id de la ville à modifier est passé à la page de maintenace par l'url
-        par la variable "idv".
-    </p>
-    <h4>Redirection</h4>
-    <p>La page de maintenance ne devant pas être accessible pour les utilisateurs non connectés, au chargement
-        de la page, on doit vérifier si la session correspond bien à un utilisateur enregistré. Si ce n'est
-        pas le cas, l'utilisateur sera redirigé vers la page d'accueil avec une erreur 302.</p>
-    <h4>Modification d'une ville</h4>
-    <p>L'id de la ville à modifier est récupéré par la méthode get dans "idv". Si celui-ci n'est pas
-        défini, un message invite l'utilisateur à sélectionner une ville sur la page d'accueil. Sinon le
-        formulaire de modification est affiché.</p>
-    <h5>Editeur</h5>
-    <p>Un utilisateur avec un compte éditeur ne peut modifier que la population de la ville et son code postal</p>
-    <p>Formulaire de recherche utilisant la méthode post.
-    Champs :</p>
-    <ul>
-        <li>Code postal - input type : text, nom : cpnew</li>
-        <li>Population - input type : number, nom : popnew</li>
-        <li>Valider - input type : submit, nom : envoi</li>
-        <li>Réinitialiser - input type : reset</li>
-    </ul>
-    <p>Après l'appui sur valider, on vérifie que les chaînes envoyées ne sont pas vides puis on lance une requête
-        de type update pour mettre à jour les champs dans la ville en filtrant suivant son id</p>
-    <h5>Administrateur</h5>
-    <p>Un utilisateur administrateur à accès aux même éléments que l'éditeur, mais également à la modification
-    du nom de la région.</p>
-    <ul>
-        <li>Région - input type : text, nom : regnew</li>
-        <li>ID région - input type : hidden, nom : idR</li>
-    </ul>
+            requête sur la collection villes en utilisant son _id, puis afficher l'ensemble des informations.
+            De plus, si l'utilisateur est connecté, un lien vers la page de maintenance lui permet 
+            de mofier les données. L'_id de la ville à modifier est passé à la page de maintenace par l'url
+            par la variable "idv".
+        </p>
+        <h4>Redirection</h4>
+        <p>La page de maintenance ne devant pas être accessible pour les utilisateurs non connectés, au chargement
+            de la page, on doit vérifier si la session correspond bien à un utilisateur enregistré. Si ce n'est
+            pas le cas, l'utilisateur sera redirigé vers la page d'accueil avec une erreur 302.</p>
+        <h4>Modification d'une ville</h4>
+        <p>L'id de la ville à modifier est récupéré par la méthode get dans "idv". Si celui-ci n'est pas
+            défini, un message invite l'utilisateur à sélectionner une ville sur la page d'accueil. Sinon le
+            formulaire de modification est affiché.</p>
+        <h5>Editeur</h5>
+        <p>Un utilisateur avec un compte éditeur ne peut modifier que la population de la ville et son code postal</p>
+        <p>Formulaire de recherche utilisant la méthode post.
+        Champs :</p>
+        <ul>
+            <li>Code postal - input type : text, nom : cpnew</li>
+            <li>Population - input type : number, nom : popnew</li>
+            <li>Valider - input type : submit, nom : envoi</li>
+            <li>Réinitialiser - input type : reset</li>
+        </ul>
+        <p>Après l'appui sur valider, on vérifie que les chaînes envoyées ne sont pas vides puis on lance une requête
+            de type update pour mettre à jour les champs dans la ville en filtrant suivant son id</p>
+        <h5>Administrateur</h5>
+        <p>Un utilisateur administrateur à accès aux même éléments que l'éditeur, mais également à la modification
+            du nom de la région. Il a accès au même formulaire que l'éditeur mais quelques champs sont ajoutés :</p>
+        <ul>
+            <li>Région - input type : text, nom : regnew</li>
+            <li>ID région - input type : hidden, nom : idR</li>
+        </ul>
+        <p>Comme pour l'éditeur, après l'envoi du formulaire, les champs non vides sont utilisés pour mettre à jour la
+            base de données. Pour les modifications sur la collection région, on utilise un champ caché pour transmettre
+            l'id du document à modifier.</p>
+        <h4>Responsive</h4>
+        <p>Le site doit pouvoir être accessible sur différents supports. Les différentes tailles d'affichage sont
+        géres avec des media queries.</p>
+    </div>
 </body>
 </html>
