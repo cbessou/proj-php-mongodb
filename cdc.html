@@ -19,8 +19,7 @@
         Pour cela, un formulaire sur la page d'accueil lui permettra d'indiquer le nom d'une ville ainsi
         que le département et/ou la région où elle se situe. La description de la ville, ou la liste des
         villes, sera affichée en dessous du formulaire après l'envoi.<br>
-        Si il n'y a qu'une seule ville correspondant au critères de recherche, toutes ses informations
-        présentes dans la base de données parmi celles-ci seront affichées :
+        S'il n'y a qu'une seule ville correspondant aux critères de recherche, certaines des informations contenues dans la base donnée seront affichées. A savoir:
     </p>
     <ul>
         <li>Son nom</li>
@@ -52,8 +51,8 @@
     <p>Un formulaire sur la page d'accueil doit permettre aux utilisateurs de s'authentifier avec un
         nom d'utilisateur et un mot de passe. Si l'utilisateur est connecté, un lien pour modifier les
         informations de la ville sélectionnée sera ajouté lors de l'affichage de celle-ci.</p>
-    <p>La page de maintenance affichera un formulaire contenant les données mofifiables de la ville.
-        Elle ne doit pas être acessible pour les utilisateurs non connectés (une redirection sera 
+    <p>La page de maintenance affichera un formulaire contenant les données modifiables de la ville.
+        Elle ne doit pas être accessible pour les utilisateurs non connectés (une redirection sera 
         effectuée)</p>
     <h2>Structure du site</h2>
     <p>Page d'accueil :</p>
@@ -127,7 +126,7 @@
         Si il y a plusieurs résultats, la page affiche une liste des villes sous forme de liens,
         avec leur nom et leur département. Le nom, le département et la région de la vile choisie
         sont transmis par l'url.<br>
-        Si il n'y a qu'un seul résultat, il faut récupérer les informations manquantes avec une 
+        S'il n'y a qu'un seul résultat, il faut récupérer les informations manquantes avec une 
         requête sur la collection villes en utilisant son _id, puis afficher l'ensemble des informations.
         De plus, si l'utilisateur est connecté, un lien vers la page de maintenance lui permet 
         de mofier les données. L'_id de la ville à modifier est passé à la page de maintenace par l'url
