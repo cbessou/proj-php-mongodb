@@ -42,9 +42,10 @@ try {
     <div id="page_index">
     <header>
         <h1>Bienvenue sur notre Site<br/>Geo France</h1>
-        <form name='login' action="" method="post">
+        <form name='login' action="#" method="post">
             <?php
             if (isset($_SESSION['util'])){
+                echo 'Connecté en tant que '.$_SESSION['util'].' ('.$_SESSION['profil'].') ';
                 echo '<input type="submit" name="deco" value="Déconnexion">';
                 
             }else{
@@ -57,7 +58,7 @@ try {
     </header>
        <h2>Géolocalisation par recherche <br/> en France Métropolitaine et Corse.</h2>
     <!--création du formulaire html-->
-    <form action="" method="get">
+    <form action="#" method="get">
     <fieldset>
         <legend>Villes</legend>
         <label>Villes: <input type="text" name="nom" placeholder="Champ Obligatoire..." required></label><br/>
@@ -183,7 +184,6 @@ try {
                     if (isset($resV[0]->lon)) {
                         echo 'Longitude: ';
                         echo $resV[0]->lon; 
-                        echo '</p>';
                     }
                     echo '</p>';
 
