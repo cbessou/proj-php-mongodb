@@ -2,8 +2,8 @@
 session_start();
 // vérification connexion et redirection
 if(!isset($_SESSION['util'])) {
-    header("Location: /index.php",TRUE,303);
-    echo 'erreur de connexion';
+    header("Location: /index.php",TRUE,302);
+    exit;
 }
 ?>
 <!-- -->
@@ -19,7 +19,7 @@ if(!isset($_SESSION['util'])) {
     <div id="page_index">
     <header>
         <h1>Gestion de la base de données Geo France</h1>
-        <form name='login' action="" method="post">
+        <form name='login' action="index.php" method="post">
             <?php
             if (isset($_SESSION['util'])){
                 echo 'Connecté en tant que '.$_SESSION['util'].' ('.$_SESSION['profil'].') ';
@@ -77,9 +77,7 @@ try {
     }
 // vérification qu'on a bien reçu la ville à modifier
 if(isset($_GET['idv'])) {
-    // echo'<pre>';
     $idv = (int)$_GET['idv'];
-    // print_r($idv);
     // récupération des infos de la ville
     // préparation de la requête sur villes
     $filter = ['_id' => $idv];
@@ -99,11 +97,9 @@ if(isset($_GET['idv'])) {
     $query = new MongoDB\Driver\Query($filter, $options);
     $curs = $mgc->executeQuery('geo_france.regions', $query);
     $resR = $curs -> toArray();
-    // print_r($res);
-    // echo'</pre>';
     echo '<h3>'.$resV[0] -> nom.'</h3>';
     // création du formulaire html
-    echo'<form action="" method="POST">
+    echo'<form action="#" method="POST">
     <fieldset>
         <legend>Modification possible sur les champs suivants</legend>
         <label>Code postal: <input type="text" name="cpnew">'.$resV[0] -> cp.'</label><br/>
@@ -116,7 +112,7 @@ if(isset($_GET['idv'])) {
     }
     echo'</fieldset>
         <input type="submit" value="Valider" name="envoi">
-        <input type="reset" value="Ré-initialiser">
+        <input type="reset" value="Réinitialiser">
     </form>';
 } else {
     echo '<p>Aucune ville sélectionnée, <a href="index.php">choisissez une ville</a></p>';
