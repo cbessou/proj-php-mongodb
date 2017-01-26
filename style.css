@@ -1,11 +1,11 @@
 body {
+    width: 100%;
      /*couleur de fond*/
 }
 
 #page_index {
-    
    /*couleur de fond*/
-    /*ombre éventuelle*/
+/*ombre éventuelle*/
 }
 
 header { 
@@ -38,5 +38,27 @@ clear: both;
     margin: auto;
 }
 
+
+@media only screen and (max-width: 720px)
+{	
+	
+	
+}
+
+
+@media only screen and (max-width: 480px)
+{
+	
+}
+
+
+@media only screen and (max-width: 320px)
+{
+	body
+	{
+		
+	}
+	
+}
 
 
