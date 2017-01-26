@@ -97,6 +97,9 @@
         <li>Mot de passe - input type : password, nom : mdp</li>
         <li>Connexion - input type : submit, nom : connect</li>
     </ul>
+    <p>Utilisation de la session pour maintenir la connexion entre les pages. Les informations de
+    la connexion seront stockées dans ['util'] pour le nom d'utilisateur et ['profil'] pour son type
+    de profil</p>
     <p>Après un clic sur connexion, une requête sera envoyée à la base de données pour récupérer
     le document de la collection users correspondant exactement à ce nom et ce mot de passe.<br>
     Le nom d'utilisateur et son type de profil seront stockés dans la session en cours.<br>
@@ -106,10 +109,11 @@
     <p>Formulaire de recherche utilisant la méthode get.
     Champs :</p>
     <ul>
-        <li>Nom - input type : text, nom : nom</li>
+        <li>Nom - input type : text, nom : nom, required</li>
         <li>Département - input type : text, nom : dpt</li>
         <li>Région - input type : text, nom : reg</li>
         <li>Rechercher - input type : submit, nom : rech</li>
+        <li>Réinitialiser - input type : reset</li>
     </ul>
     <p>Après un clic sur rechercher, une requête est envoyée à la base de données pour récupérer 
         les villes correspondant au nom entré. Ensuite, pour chaque ville trouvée, on fait une
@@ -120,10 +124,41 @@
     </p>
     <h5>Affichage</h5>
     <p>Si le tableau de résultats est vide, la page indique qu'il n'y a aucune correspondance.<br>
-        Si il y a plusieurs résultats, la page affiche une liste des villes avec leur nom et leur
-        département.<br>
+        Si il y a plusieurs résultats, la page affiche une liste des villes sous forme de liens,
+        avec leur nom et leur département. Le nom, le département et la région de la vile choisie
+        sont transmis par l'url.<br>
         Si il n'y a qu'un seul résultat, il faut récupérer les informations manquantes avec une 
         requête sur la collection villes en utilisant son _id, puis afficher l'ensemble des informations.
+        De plus, si l'utilisateur est connecté, un lien vers la page de maintenance lui permet 
+        de mofier les données. L'_id de la ville à modifier est passé à la page de maintenace par l'url
+        par la variable "idv".
     </p>
+    <h4>Redirection</h4>
+    <p>La page de maintenance ne devant pas être accessible pour les utilisateurs non connectés, au chargement
+        de la page, on doit vérifier si la session correspond bien à un utilisateur enregistré. Si ce n'est
+        pas le cas, l'utilisateur sera redirigé vers la page d'accueil avec une erreur 302.</p>
+    <h4>Modification d'une ville</h4>
+    <p>L'id de la ville à modifier est récupéré par la méthode get dans "idv". Si celui-ci n'est pas
+        défini, un message invite l'utilisateur à sélectionner une ville sur la page d'accueil. Sinon le
+        formulaire de modification est affiché.</p>
+    <h5>Editeur</h5>
+    <p>Un utilisateur avec un compte éditeur ne peut modifier que la population de la ville et son code postal</p>
+    <p>Formulaire de recherche utilisant la méthode post.
+    Champs :</p>
+    <ul>
+        <li>Code postal - input type : text, nom : cpnew</li>
+        <li>Population - input type : number, nom : popnew</li>
+        <li>Valider - input type : submit, nom : envoi</li>
+        <li>Réinitialiser - input type : reset</li>
+    </ul>
+    <p>Après l'appui sur valider, on vérifie que les chaînes envoyées ne sont pas vides puis on lance une requête
+        de type update pour mettre à jour les champs dans la ville en filtrant suivant son id</p>
+    <h5>Administrateur</h5>
+    <p>Un utilisateur administrateur à accès aux même éléments que l'éditeur, mais également à la modification
+    du nom de la région.</p>
+    <ul>
+        <li>Région - input type : text, nom : regnew</li>
+        <li>ID région - input type : hidden, nom : idR</li>
+    </ul>
 </body>
 </html>
