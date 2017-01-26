@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -26,7 +27,7 @@ $bulk = new MongoDB\Driver\BulkWrite;
 //création des documents
 $document1 = ['nom' => 'admin', 'mdp' => 'admin', 'profil' => 'admin'];
 $document2 = ['nom' => 'edit', 'mdp' => 'edit', 'profil' => 'edit'];
-
+$bulk->delete([], ['limit' => 0]);
 $_id1 = $bulk->insert($document1);
 $_id2 = $bulk->insert($document2);
 
@@ -34,7 +35,7 @@ $manager = new MongoDB\Driver\Manager($dsn);
 //$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
 $result = $manager->executeBulkWrite('geo_france.users', $bulk);
     
-    echo "La table users a été remplie<br>";
+    echo "La table users a été réinitialisée<br>";
     echo '<pre>';
     print_r($document1);
     //echo '<br>';
