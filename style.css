@@ -1,0 +1,42 @@
+body {
+     /*couleur de fond*/
+}
+
+#page_index {
+    
+   /*couleur de fond*/
+    /*ombre éventuelle*/
+}
+
+header { 
+background-color: #9A3FFF;
+    overflow: auto;
+}
+
+header h1{ 
+float :left;
+margin-top: 15px;
+}
+
+header form { 
+margin-top: 15px;
+margin-right: 10px;
+float: right;
+}
+
+header h1 { 
+padding-left : 28px;
+}
+
+header + h2 {
+clear: both;
+  
+}
+
+#page_index { 
+    width: 1200px;
+    margin: auto;
+}
+
+
+

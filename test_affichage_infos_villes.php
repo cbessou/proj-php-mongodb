@@ -56,7 +56,7 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         if (isset($_GET['nom'])) { 
         $ville= $_GET['nom'];
         } 
-        
+       
         if (isset($_GET['dpt'])) { 
         $departements= $_GET['dpt'];
         }

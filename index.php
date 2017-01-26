@@ -34,9 +34,12 @@ try {
 <head>
     <meta charset="utf-8">
     <title>Projet PHP - MongoDB</title>
+    <link rel="stylesheet" href="style.css"> 
 </head>
-<body>
+<body> 
+    <div id="page_index">
     <header>
+        <h1>Bienvenue sur notre Site<br/>Geo France</h1>
         <form name='login' action="" method="post">
             <?php
             if (isset($_SESSION['util'])){
@@ -50,10 +53,8 @@ try {
             ?>
         </form>
     </header>
-    <h1>Bienvenue sur notre Site.</h1>
-    <h1>Geo France.</h1><br/>
-    <h2>Géolocalisation par Recherche</h2>
-    <h2>en France Métropolitaine et Corse.</h2><br/>
+       <h2>Géolocalisation par recherche <br/> en France Métropolitaine et Corse.</h2>
+    
     
     <!--création du formulaire html-->
     <p>
@@ -68,6 +69,6 @@ try {
         <input type="reset" value="Réinitialiser">
     </form>
     </p>
-    
+    </div> 
 </body>
 </html>
