@@ -148,12 +148,14 @@ try {
                 echo ('Aucune ville trouvée');
             } elseif ($t_result==1) { 
                 echo ('Une ville trouvée');
+
                
                 $oneresultat = $resultat[0];
                 echo '<h3>Resultat:</h3>';
                 echo ('<h4>'.$oneresultat['nom'].'</h4>');
                 echo ('Region: '.$oneresultat['nom-reg'].'<br/>');
                 echo ('Departement: '.$oneresultat['nom-dpt']);
+                echo ('<a href="maintenance.php?idv='.$oneresultat['_id'].'">Modifier la ville</a>');
 
             }  elseif ($t_result>1) {
                 echo ('Plusieurs villes correspondent à votre recherche<br/> Veuillez préciser votre demande:<br>');
