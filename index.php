@@ -1,51 +1,75 @@
-<?php 
-try { 
-// les paramètres de connexion
-$dsn='mongodb://localhost:27017';
-// création de l'instance de connexion
-$mgc = new MongoDB\Driver\Manager($dsn);
+<?php
+session_start();
+if(isset($_POST['deco'])){
+    session_destroy();
+    session_start();
 }
- catch(MongoDB\Driver\Exception $e) {
+
+    //interroger la base de données
+    $dsn='mongodb://localhost:27017';
+    $dbname = 'geo_france';
+    $collname = 'users';
+
+try {
+  $mgc = new MongoDB\Driver\Manager($dsn);
+  if(isset($_POST['util'])&&isset($_POST['mdp'])){
+    $filter = ['nom' => $_POST['util'],'mdp' => $_POST['mdp']];
+    $query = new MongoDB\Driver\Query($filter);
+    $find = $mgc->executeQuery($dbname.'.'.$collname, $query);
+    $result = $find->toArray();
+    //print_r($result);
+    //print_r(count($result));
+    if(count($result)==1) {
+     $_SESSION['util']=$result[0]->nom;
+     $_SESSION['profil']=$result[0]->profil;
+    }
+  }
+} catch(MongoDB\Driver\Exception $e) {
   // en cas d'erreur on montre le message reçu.
-  die (sprintf("<h2>traitement de l'erreur survenue durant le traitement</h2>\n<pre>%s</pre>\n", $e->getMessage()));
+   printf("<h2>erreur de connexion</h2>\n<pre>%s</pre>\n", $e->getMessage());
 }
 
 ?>
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-        <title>Demo</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="Demo project">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <style type="text/css"></style>
-    </head>
-
-    <body>
-        <form action="" method="get">
-        <fieldset>
-        <legend>Villes</legend>
-        <label>Villes:
-           <input type="text" name="nom" placeholder="Champ Obligatoire..." required>
-        </label>
-        <br/>
-        <label>Département:
-            <input type="text" name="dpt">
-        </label>
-        <br/>
-        <label>Région:
-            <input type="text" name="reg">
-        </label>
-        <br/>
-        </fieldset>
-        <input type="submit" value="Valider" name="rech">
-        <input type="reset" value="Réinitialiser">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet PHP - MongoDB</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body> 
+    <div id="page_index">
+    <header>
+        <h1>Bienvenue sur notre Site<br/>Geo France</h1>
+        <form name='login' action="" method="post">
+            <?php
+            if (isset($_SESSION['util'])){
+                echo '<input type="submit" name="deco" value="Déconnexion">';
+                echo '<a href="maintenance.php">Page de maintenance</a>';
+            }else{
+                echo '<input type="text" name="util" placeholder="Utilisateur" required>
+            <input type="password" name="mdp" placeholder="Mot de passe" required>
+            <input type="submit" value="Connexion">';
+            }
+            ?>
         </form>
-        
-        <?php 
+    </header>
+       <h2>Géolocalisation par recherche <br/> en France Métropolitaine et Corse.</h2>
+    
+    
+    <!--création du formulaire html-->
+    <form action="" method="get">
+    <fieldset>
+        <legend>Villes</legend>
+        <label>Villes: <input type="text" name="nom" placeholder="Champ Obligatoire..." required></label><br/>
+        <label>Département: <input type="text" name="dpt"></label><br/>
+        <label>Région: <input type="text" name="reg"></label><br/>
+        </fieldset>
+        <input name ="rech" type="submit" value="Valider">
+        <input type="reset" value="Réinitialiser">
+    </form>
+    <?php 
        
         //Récupération des variables du formulaire. Declaration et vérification isset pour résoudre problème de variables non définis lors du premier chargement de la page
         if(isset($_GET['rech'])){
@@ -85,9 +109,10 @@ $mgc = new MongoDB\Driver\Manager($dsn);
                     $resD = $cursD -> toArray();
                     //print_r ($resD);
                     $compteD = count($resD);
-                    $id = $resD[0] -> _id_region;
-                    $options = ['projection' => ['nom' => 1]];
+                   
                     if($compteD==1){
+                        $id = $resD[0] -> _id_region;
+                        $options = ['projection' => ['nom' => 1]];
                         $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$region.'.*','i'), '_id'=>$id];
                         $queryR = new MongoDB\Driver\Query($filterR, $options);
                         $cursR = $mgc->executeQuery('geo_france.regions', $queryR);
@@ -140,6 +165,8 @@ $mgc = new MongoDB\Driver\Manager($dsn);
         }    
        
         ?>
-    </body>
 
-    </html>
+
+    </div> 
+</body>
+</html>
