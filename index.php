@@ -85,7 +85,7 @@ try {
             //Initialisation d'un tableau pour les résultats
             $resultat = [];
     
-            //Recherche de la ville par l'utilisation d'une regex
+            //Recherche de la ville par l'utilisation d'une regex qui permet de la rendre insensible à la case
             $filterV = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
             $options = ['projection' => ['nom' => 1, '_id_dept' => 1]];
             // création de requête
@@ -94,6 +94,7 @@ try {
             // exécution de la requête par la connexion
             $cursV = $mgc->executeQuery('geo_france.villes', $queryV);
             $resV = $cursV -> toArray(); 
+
             $compteV = count($resV);
         
             if ($compteV !==0) {
@@ -201,10 +202,9 @@ try {
                 foreach($resultat as $iresult) {
                      echo ('<p><a href="index.php?nom='.$iresult['nom'].'&dpt='.$iresult['nom-dpt'].'&reg='.$iresult['nom-reg'].'&rech=Valider" >'.$iresult['nom'].' ('.$iresult['nom-dpt'].')</a></p>');
                  }   
-                 echo '<div class="resultats">'; 
+                 echo '</div>'; 
             }
-        }    
-       
+        }     
         ?>
     </div> 
 </body>
