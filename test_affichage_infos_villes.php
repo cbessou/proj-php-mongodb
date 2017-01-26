@@ -118,12 +118,59 @@ $mgc = new MongoDB\Driver\Manager($dsn);
                         }
                     }
                 }
+                
+            
+                          
+            } 
+           
+            $t_result= count ($resultat);
+                
+            if ($t_result==0) {
+                echo ('Aucune ville trouvées');
+            } elseif ($t_result==1) { 
+                echo ('Une ville trouvée');
                 echo ('<pre>');
                 print_r ($resultat);
                 echo ('</pre>');
-            } 
+                
+                print_r($resultat[0]);
+                
+                $oneresultat = $resultat[0];
+                echo '<h3>Resultat:</h3>';
+                echo ('<h4>'.$oneresultat['nom'].'</h4>');
+                echo ('Region: '.$oneresultat['nom-reg'].'<br/>');
+                echo ('Departement: '.$oneresultat['nom-dpt']);
+
+                
+            }  elseif ($t_result>1) {
+                echo ('Plusieurs villes correspondent à votre recherche<br/> Veuillez préciser votre demande:<br>');
+              /*  echo ('<pre>');
+                print_r ($resultat);
+                echo ('</pre>');
+                */
+                 foreach($resultat as $iresult) {
+                 echo ('<h4><a href=#>'.$iresult['nom'].'</a></h4>');
+                 echo ('Region: '.$iresult['nom-reg'].'<br/>');
+                     
+                 }
+         
+                
+              
+                
+            }
+                
+    
         }    
        
+        
+        
+       
+        
+        
+        
+        
+        
+        
        /*if (isset($region)) {
            $filterR = ['nom'=> new MongoDB\BSON\Regex('^'.$regions.'$','i')];
            $queryR = new MongoDB\Driver\Query($filterR);
