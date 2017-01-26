@@ -45,6 +45,8 @@ print_r($curs);
 $res = $curs -> toArray(); 
 print_r($res);
 echo'</pre>';
+$resultat = ['_id'=>19, 'nom'=>'Toto', 'pop'=>1000, 'cp'=>25836, '_id_dept'=>25, '_id_region'=>4, 'nom_region'=>'Titi'];
+print_r($resultat);
     }
     catch(MongoDB\Driver\Exception $e) {
         // en cas d'erreur on montre le message reçu.
@@ -59,6 +61,7 @@ echo'</pre>';
     <fieldset>
         <legend>Mise à jour du code postal et de la population</legend>
         <p>Nouvelles valeurs</p>
+        <p>'.$resultat['nom'].'</p>
         <label>Code postal: <input type="text" name="cpnew">Ancienne valeur</label><br/>
         <label>Population: <input type="text" name="popnew">Ancienne valeur</label><br/>';
 
