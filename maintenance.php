@@ -18,10 +18,17 @@ if(!isset($_SESSION['util'])) {
 <body>
     <div id="page_index">
     <header>
-        <h1>Maintenance de la base de données<br/>Geo France</h1>
+        <h1>Gestion de la base de données Geo France</h1>
+        <form name='login' action="" method="post">
+            <?php
+            if (isset($_SESSION['util'])){
+                echo 'Connecté en tant que '.$_SESSION['util'].' ('.$_SESSION['profil'].') ';
+                echo '<input type="submit" name="deco" value="Déconnexion">';
+            }
+            ?>
+        </form>
     </header>
-        <h2>Vous êtes éditeur :</h2>
-
+        <h2>Maintenance de la base de données :</h2>
 <?php
 // requêtes d'écriture dans la base de données
 try { 
@@ -94,13 +101,11 @@ if(isset($_GET['idv'])) {
     $resR = $curs -> toArray();
     // print_r($res);
     // echo'</pre>';
-    
+    echo '<h3>'.$resV[0] -> nom.'</h3>';
     // création du formulaire html
     echo'<form action="" method="POST">
     <fieldset>
         <legend>Modification possible sur les champs suivants</legend>
-        <p>Nouvelles valeurs</p>
-        <p>'.$resV[0] -> nom.'</p>
         <label>Code postal: <input type="text" name="cpnew">'.$resV[0] -> cp.'</label><br/>
         <label>Population: <input type="text" name="popnew">'.$resV[0] -> pop.'</label><br/>
         <p>'.$resD[0] -> nom.'</p>';
