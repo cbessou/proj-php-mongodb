@@ -56,8 +56,6 @@ try {
         </form>
     </header>
        <h2>Géolocalisation par recherche <br/> en France Métropolitaine et Corse.</h2>
-    
-    
     <!--création du formulaire html-->
     <form action="" method="get">
     <fieldset>
@@ -122,7 +120,7 @@ try {
                             foreach($resV[$i] as $key => $value){
                                 $tmp[$key]= $value;
                             }
-                            //print_r ($tmp);
+            
                             foreach($resD[0] as $key => $value){
                                 if($key=='nom'){
                                     $tmp['nom-dpt']=$value;
@@ -145,25 +143,63 @@ try {
            
             $t_result= count ($resultat);
             if ($t_result==0) {
-                echo ('Aucune ville trouvée');
+                echo ('<p>Aucune ville trouvée.</p>');
             } elseif ($t_result==1) { 
-                echo ('Une ville trouvée');
-
-            
+                echo '<div class="resultats">';
+                
                 $oneresultat = $resultat[0];
-                echo '<h3>Resultat:</h3>';
                 echo ('<h4>'.$oneresultat['nom'].'</h4>');
+                echo ('Departement: '.$oneresultat['nom-dpt'].'<br/>');
                 echo ('Region: '.$oneresultat['nom-reg'].'<br/>');
-                echo ('Departement: '.$oneresultat['nom-dpt']);
+
+                $filterV = ['_id'=> $oneresultat['_id'] ];
+                // création de requête
+                $queryV = new MongoDB\Driver\Query($filterV);
+
+                $cursV = $mgc->executeQuery('geo_france.villes', $queryV);
+                $resV = $cursV -> toArray(); 
+                
+                echo '<p>';
+                    if (isset($resV[0]->cp)) {
+                        echo 'Code Postal: ';
+                        echo $resV[0]->cp;
+                        echo '<br/>'; 
+                    }
+
+                    if (isset($resV[0]->pop)) {
+                        echo 'Population: ';
+                        echo $resV[0]->pop; 
+                        }
+                echo '</p>';
+
+                echo '<p>Coordonées: <br/>';
+
+                    if (isset($resV[0]->lat)) {
+                        echo 'Latitude: ';
+                        echo $resV[0]->lat; 
+                        echo '<br/>';
+                    }
+
+                    if (isset($resV[0]->lon)) {
+                        echo 'Longitude: ';
+                        echo $resV[0]->lon; 
+                        echo '</p>';
+                    }
+                    echo '</p>';
 
 
                 if (isset($_SESSION['util'])){
                     echo ('<a href="maintenance.php?idv='.$oneresultat['_id'].'">Modifier la ville</a>');
                 }
 
+                echo '</div>';
+
+
+
             }  elseif ($t_result>1) {
                 echo ('Plusieurs villes correspondent à votre recherche<br/> Veuillez préciser votre demande:<br>');
               
+
                 foreach($resultat as $iresult) {
                      echo ('<a href="index.php?nom='.$iresult['nom'].'&dpt='.$iresult['nom-dpt'].'&reg='.$iresult['nom-reg'].'&rech=Valider" >'.$iresult['nom'].' '.$iresult['nom-dpt'].'</a><br/>');
                  }    
@@ -171,8 +207,6 @@ try {
         }    
        
         ?>
-
-
     </div> 
 </body>
 </html>

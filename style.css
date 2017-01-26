@@ -6,6 +6,9 @@ body {
 #page_index {
    /*couleur de fond*/
 /*ombre éventuelle*/
+	border: 2px solid grey;
+    width: 90%;
+    margin: auto;
 }
 
 header { 
@@ -30,34 +33,65 @@ padding-left : 28px;
 
 header + h2 {
 clear: both;
-  
 }
 
-#page_index { 
-    width: 1200px;
-    margin: auto;
+h2, fieldset, input[name=rech] {
+	margin-left : 28px;
 }
 
+.resultats {
+	background-color: #DCDCED;
+	padding-left: 28px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 10px;
+}
 
-@media only screen and (max-width: 720px)
+@media only screen and (max-width: 960px)
 {	
-	
+	#page_index {
+	width: 100%;
+
+	}
 	
 }
 
 
 @media only screen and (max-width: 480px)
 {
+
+	body
+	{
+	text-align: center;	
+	}
 	
+	h2, fieldset, input[name=rech] {
+	margin-left : 0;
+}
+
+	#resultats, #resultats p {
+		max-width: 100%;
+	}
+
+	input {
+		max-width: 100%;
+		margin:auto;
+	}
+
+	input {
+	display: block;
+	}
+
+	.resultats {
+	padding-left: 28px;
+	}
+
 }
 
 
 @media only screen and (max-width: 320px)
 {
-	body
-	{
-		
-	}
+	
 	
 }
 
