@@ -103,14 +103,14 @@ $mgc = new MongoDB\Driver\Manager($dsn);
                             foreach($resD[0] as $key => $value){
                                 if($key=='nom'){
                                     $tmp['nom-dpt']=$value;
-                                }else{
+                                }else if($key!='_id'){
                                     $tmp[$key]=$value;
                                 }
                             }
                             foreach($resR[0] as $key => $value){
                                 if($key=='nom'){
                                     $tmp['nom-reg']=$value;
-                                }else{
+                                }else if($key!='_id'){
                                     $tmp[$key]=$value;
                                 }
                             }
