@@ -69,7 +69,7 @@ try {
     </form>
     <?php 
        
-        //Récupération des variables du formulaire. Declaration et vérification isset pour résoudre problème de variables non définis lors du premier chargement de la page
+       
         if(isset($_GET['rech'])){
             //récupérer les valeurs
             if(isset($_GET['nom'])){ 
@@ -85,7 +85,7 @@ try {
             //Initialisation d'un tableau pour les résultats
             $resultat = [];
     
-            ////////// VILLE //////////////
+            //Recherche de la ville par l'utilisation d'une regex
             $filterV = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
             $options = ['projection' => ['nom' => 1, '_id_dept' => 1]];
             // création de requête
@@ -105,7 +105,6 @@ try {
                     $cursD = $mgc->executeQuery('geo_france.departements', $queryD);
                 
                     $resD = $cursD -> toArray();
-                    //print_r ($resD);
                     $compteD = count($resD);
                    
                     if($compteD==1){
@@ -194,15 +193,15 @@ try {
 
                 echo '</div>';
 
-
-
             }  elseif ($t_result>1) {
-                echo ('Plusieurs villes correspondent à votre recherche<br/> Veuillez préciser votre demande:<br>');
-              
 
+                echo '<div class="resultats">';
+                echo ('<p>Plusieurs villes correspondent à votre recherche.<br/> Veuillez préciser votre demande:</p>');
+              
                 foreach($resultat as $iresult) {
-                     echo ('<a href="index.php?nom='.$iresult['nom'].'&dpt='.$iresult['nom-dpt'].'&reg='.$iresult['nom-reg'].'&rech=Valider" >'.$iresult['nom'].' '.$iresult['nom-dpt'].'</a><br/>');
-                 }    
+                     echo ('<p><a href="index.php?nom='.$iresult['nom'].'&dpt='.$iresult['nom-dpt'].'&reg='.$iresult['nom-reg'].'&rech=Valider" >'.$iresult['nom'].' ('.$iresult['nom-dpt'].')</a></p>');
+                 }   
+                 echo '<div class="resultats">'; 
             }
         }    
        

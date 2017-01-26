@@ -35,16 +35,23 @@ header + h2 {
 clear: both;
 }
 
-h2, fieldset, input[name=rech] {
+h2, h3, fieldset, fieldset + input {
 	margin-left : 28px;
 }
 
+fieldset + input { 
+margin-top: 5px;
+margin-bottom: 5px;
+ }
+
+
 .resultats {
 	background-color: #DCDCED;
-	padding-left: 28px;
-	padding-top: 5px;
-	padding-bottom: 5px;
 	margin-top: 10px;
+	margin-left: 28px;
+	margin-right: 28px;
+	margin-bottom: 15px;
+	padding: 10px;
 }
 
 @media only screen and (max-width: 960px)
@@ -69,7 +76,7 @@ h2, fieldset, input[name=rech] {
 	margin-left : 0;
 }
 
-	#resultats, #resultats p {
+	.resultats, .resultats p {
 		max-width: 100%;
 	}
 
@@ -78,12 +85,17 @@ h2, fieldset, input[name=rech] {
 		margin:auto;
 	}
 
-	input {
+	fieldset input {
 	display: block;
 	}
 
+	header input {
+		display: block;
+		text-align: left;
+	}
+
 	.resultats {
-	padding-left: 28px;
+	
 	}
 
 }
