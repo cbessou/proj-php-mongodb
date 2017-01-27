@@ -61,9 +61,9 @@ try {
     <form action="#" method="get">
     <fieldset>
         <legend>Villes</legend>
-        <label>Villes: <input type="text" name="nom" placeholder="Champ Obligatoire..." required></label><br/>
-        <label>Département: <input type="text" name="dpt"></label><br/>
-        <label>Région: <input type="text" name="reg"></label><br/>
+        <label>Nom : <input type="text" name="nom" placeholder="Champ Obligatoire..." required></label><br/>
+        <label>Département : <input type="text" name="dpt"></label><br/>
+        <label>Région : <input type="text" name="reg"></label><br/>
         </fieldset>
         <input name ="rech" type="submit" value="Valider">
         <input type="reset" value="Réinitialiser">
