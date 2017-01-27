@@ -4,7 +4,17 @@ if(isset($_POST['deco'])){
     session_destroy();
     session_start();
 }
-
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet PHP - MongoDB</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body> 
+<?php
     //interroger la base de données
     $dsn='mongodb://localhost:27017';
     $dbname = 'geo_france';
@@ -22,7 +32,7 @@ try {
     if(count($result)==1) {
      $_SESSION['util']=$result[0]->nom;
      $_SESSION['profil']=$result[0]->profil;
-    }
+    } else {$msg = "Erreur d'identifiant ou de mot de passe";}
   }
 } catch(MongoDB\Driver\Exception $e) {
   // en cas d'erreur on montre le message reçu.
@@ -30,15 +40,6 @@ try {
 }
 
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projet PHP - MongoDB</title>
-    <link rel="stylesheet" href="style.css"> 
-</head>
-<body> 
     <div id="page_index">
     <header>
         <h1>Bienvenue sur notre Site<br/>Geo France</h1>
@@ -52,6 +53,7 @@ try {
                 echo '<input type="text" name="util" placeholder="Utilisateur" required>
             <input type="password" name="mdp" placeholder="Mot de passe" required>
             <input type="submit" value="Connexion">';
+                if(isset($msg)){echo '<br>'.$msg;}
             }
             ?>
         </form>
