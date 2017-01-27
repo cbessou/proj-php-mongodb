@@ -2,7 +2,7 @@
 session_start();
 // vérification connexion et redirection
 if(!isset($_SESSION['util'])) {
-    header("Location: /index.php",TRUE,302);
+    header("Location: index.php",TRUE,302);
     exit;
 }
 ?>
