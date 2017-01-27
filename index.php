@@ -70,7 +70,6 @@ try {
     </form>
     <?php 
        
-       
         if(isset($_GET['rech'])){
             //récupérer les valeurs
             if(isset($_GET['nom'])){ 
@@ -89,18 +88,22 @@ try {
             //Recherche de la ville par l'utilisation d'une regex qui permet de la rendre insensible à la case
             $filterV = ['nom'=> new MongoDB\BSON\Regex('^'.$ville.'$','i')];
             $options = ['projection' => ['nom' => 1, '_id_dept' => 1]];
-            // création de requête
+
+            // création de la requête ville
             $queryV = new MongoDB\Driver\Query($filterV, $options);
     
             // exécution de la requête par la connexion
             $cursV = $mgc->executeQuery('geo_france.villes', $queryV);
+            // transformation en tableau pour pouvoir recupérer les données
             $resV = $cursV -> toArray(); 
 
             $compteV = count($resV);
         
             if ($compteV !==0) {
                 for ($i=0; $i < $compteV; $i++) {
+                    //recuperation de l'id departement de la pour pouvoir faire la correspondance avec la collection departements
                     $id = $resV[$i] -> _id_dept;
+                    //requête departement
                     $filterD = ['nom'=> new MongoDB\BSON\Regex('^'.$dept.'.*','i'), '_id'=>$id];
                     $options = ['projection' => ['nom' => 1, '_id_region' => 1]];
                     $queryD = new MongoDB\Driver\Query($filterD, $options);
@@ -108,7 +111,7 @@ try {
                 
                     $resD = $cursD -> toArray();
                     $compteD = count($resD);
-                   
+                   //Requète pour la région si le departement est renseigné
                     if($compteD==1){
                         $id = $resD[0] -> _id_region;
                         $options = ['projection' => ['nom' => 1]];
@@ -116,6 +119,7 @@ try {
                         $queryR = new MongoDB\Driver\Query($filterR, $options);
                         $cursR = $mgc->executeQuery('geo_france.regions', $queryR);
                         $resR = $cursR -> toArray();
+                        //On stocke les résultats dans un tableau
                         if(count($resR)==1){
                             $tmp=[];
                             foreach($resV[$i] as $key => $value){
@@ -143,6 +147,7 @@ try {
             } 
            
             $t_result= count ($resultat);
+             // Affichage des resultats suivant le nombre de réponses
             if ($t_result==0) {
                 echo ('<p>Aucune ville trouvée.</p>');
             } elseif ($t_result==1) { 
@@ -154,7 +159,8 @@ try {
                 echo ('Region: '.$oneresultat['nom-reg'].'<br/>');
 
                 $filterV = ['_id'=> $oneresultat['_id'] ];
-                // création de requête
+                
+                // nouvelle requête
                 $queryV = new MongoDB\Driver\Query($filterV);
 
                 $cursV = $mgc->executeQuery('geo_france.villes', $queryV);
@@ -187,7 +193,7 @@ try {
                     }
                     echo '</p>';
 
-
+                //Lien pointant vers la page maintenance tout en permettant de récupérer l'id de la ville dans l'autre page
                 if (isset($_SESSION['util'])){
                     echo ('<a href="maintenance.php?idv='.$oneresultat['_id'].'">Modifier la ville</a>');
                 }
@@ -199,6 +205,7 @@ try {
                 echo '<div class="resultats">';
                 echo ('<p>Plusieurs villes correspondent à votre recherche.<br/> Veuillez préciser votre demande:</p>');
               
+                //création d'un lien pointant vers la page d'un resultat
                 foreach($resultat as $iresult) {
                      echo ('<p><a href="index.php?nom='.$iresult['nom'].'&dpt='.$iresult['nom-dpt'].'&reg='.$iresult['nom-reg'].'&rech=Valider" >'.$iresult['nom'].' ('.$iresult['nom-dpt'].')</a></p>');
                  }   

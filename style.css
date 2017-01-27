@@ -39,12 +39,16 @@ clear: both;
 }
 
 h2, h3, fieldset, fieldset + input {
-	margin-left : 28px;
+margin-left : 28px;
 }
 
 fieldset + input { 
 margin-top: 5px;
 margin-bottom: 5px;
+ }
+
+fieldset {
+ 	margin-right: 28px;
  }
 
 .resultats {
@@ -84,7 +88,7 @@ margin-bottom: 5px;
 }
 
 	.resultats, .resultats p {
-		max-width: 100%;
+	max-width: 100%;
 	}
 
 	input {
